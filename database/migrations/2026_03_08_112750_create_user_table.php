@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_lengkap');
+            $table->string('username')->unique();
+            $table->string('password');
+            // Role untuk membedakan Admin dan Siswa sesuai soal
+            $table->enum('role', ['admin', 'siswa'])->default('siswa');
+            $table->text('alamat')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

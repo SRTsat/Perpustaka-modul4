@@ -13,6 +13,24 @@ return new class extends Migration
     {
         Schema::create('peminjamans', function (Blueprint $table) {
             $table->id();
+
+            // relasi ke siswa yang meminjam
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
+            // relasi ke buku
+            $table->foreignId('buku_id')->constrained('bukus')->onDelete('cascade');
+
+            // jumlah buku dipinjam
+            $table->integer('jumlah')->default(1);
+
+            $table->date('tanggal_peminjaman');
+
+            // tanggal buku dikembalikan
+            $table->date('tanggal_pengembalian')->nullable();
+
+            // status peminjaman
+            $table->enum('status_peminjaman', ['dipinjam', 'dikembalikan'])->default('dipinjam');
+
             $table->timestamps();
         });
     }
